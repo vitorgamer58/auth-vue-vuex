@@ -1,5 +1,10 @@
 # projeto
 
+## Cloning
+```
+git clone --recurse-submodules -j8 https://github.com/vitorgamer58/auth-vue-vuex.git
+```
+
 ## Project setup
 ```
 npm install
