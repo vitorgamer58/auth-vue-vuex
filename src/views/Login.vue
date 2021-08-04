@@ -18,6 +18,7 @@
                     v-model="usuario.senha"
                 />
             </div>
+            <p class="alert alert-danger" v-if="messageErro">{{ messageErro }}</p>
             <button type="submit" class="btn btn-primary brn-block">
                 Logar
             </button>
@@ -29,23 +30,37 @@
 </template>
 
 <script>
-import http from "@/http/index.js"; // Poderia ser '@/http' ou '@/http/index'
+//import http from "@/http/index.js"; // Poderia ser '@/http' ou '@/http/index'
 
 export default {
     data() {
         return {
             usuario: {},
+            messageErro: ''
         };
     },
     methods: {
         efetuarLogin() {
-            http.post("http://localhost:8000/auth/login", this.usuario)
+            this.$store.dispatch('efetuarLogin', this.usuario)
+                .then(() => this.$router.push({ name: "gerentes" }))
+                .catch(err => {
+                    if(err.request.status == 401) {
+                        this.messageErro = 'Login ou senha inválido(s)'
+                    } else {
+                        console.log(err)
+                    }
+                })
+            /* http.post("http://localhost:8000/auth/login", this.usuario)
                 .then((res) => {
                     console.log(res);
-                    localStorage.setItem("token", res.data.access_token);
+                    //localStorage.setItem("token", res.data.access_token);
+                    this.$store.commit('DEFINIR_USUARIO_LOGADO', {
+                        token: res.data.access_token,
+                        usuario: res.data.user
+                    })
                     this.$router.push({ name: "gerentes" });
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(err)); */
         },
     },
 };

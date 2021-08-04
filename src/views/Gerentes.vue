@@ -24,6 +24,10 @@ export default {
         };
     },
     mounted () {
+        /* if(!this.$store.state.token) {
+            console.log('Não Autorizado!!!')
+            this.$router.push({ name: 'login' })
+        } */
         this.$http.get('gerentes')
             .then(res => this.gerentes = res.data)
             .catch(err => console.log(err))

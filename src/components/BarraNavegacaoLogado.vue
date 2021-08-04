@@ -13,13 +13,9 @@
 </template>
 
 <script>
+import { logoutMixin } from '@/mixins'
 export default {
-    methods: {
-        efetuarLogout() {
-            localStorage.removeItem("token");
-            this.$router.push({ name: "login" });
-        },
-    }
+    mixins: [logoutMixin]
 };
 </script>
 
